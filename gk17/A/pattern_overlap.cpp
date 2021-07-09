@@ -37,18 +37,33 @@ class Solution{
             mem[i][j] = 1;
             
             if (p1[i] == '*'){
-                if (patterns_overlap(i+1, j+1) 
+                int c = 0, pos = j;
+
+                while (pos <= p2.length() && c <= 4){
+                    if (patterns_overlap(i+1, pos)) return true;
+                    if (pos < p2.length() && p2[pos] != '*') c++;
+                    pos++;
+                }
+                /*
+                if (patterns_overlap(i+1, j) 
+                || patterns_overlap(i+1, j+1)
                 || patterns_overlap(i+1, j+2)
                 || patterns_overlap(i+1, j+3)
-                || patterns_overlap(i+1, j+4)
-                || patterns_overlap(i+1, j+5)) return true;    
+                || patterns_overlap(i+1, j+4)) return true;   */ 
             } 
             if (p2[j] == '*'){
-                if (patterns_overlap(i+1, j+1) 
+                int c = 0, pos = i;
+                while (pos <= p1.length() && c <= 4){
+                    if (patterns_overlap(pos, j+1)) return true;
+                    if (pos < p1.length() && p1[pos] != '*') c++;
+                    pos++;
+                }
+                /*
+                if (patterns_overlap(i, j+1) 
+                || patterns_overlap(i+1, j+1)
                 || patterns_overlap(i+2, j+1)
                 || patterns_overlap(i+3, j+1)
-                || patterns_overlap(i+4, j+1)
-                || patterns_overlap(i+5, j+1)) return true;    
+                || patterns_overlap(i+4, j+1)) return true;    */
             }
             else if (p1[i] == p2[j]){
                 return patterns_overlap(i+1, j+1);
@@ -59,10 +74,10 @@ class Solution{
 
 
 int main(){
-    /*
-    Solution* s = new Solution("***", "jeudsbcekjd");
+    Solution* s = new Solution("*jlmnabcdf", "kb*zajlmnabcdf");
     cout << s->patterns_overlap(0,0) << '\n';
-    */
+
+    /*
     string input;
 
     cin >> input;
@@ -78,6 +93,6 @@ int main(){
         else{
             cout << "case #" << t << ": FALSE\n";
         }
-
     }
+    */
 }
