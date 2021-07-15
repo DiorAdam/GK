@@ -15,16 +15,14 @@ struct TrieNode{
 
 class Trie{
 public:
-    TrieNode root;
-    Trie() {
-        root.end_of_word = false;
-        root.rest_words = 0;
-    }
+    TrieNode* root;
+    Trie(): root{new TrieNode} {}
     ~Trie(){
+        traverse_del(root);
     }
 
     void add_word(string word){
-        TrieNode* head = &root;
+        TrieNode* head = root;
         head->rest_words++;
         for (char c: word){
             if(head->children.find(c) != head->children.end()){
@@ -32,7 +30,7 @@ public:
                 head->rest_words++;
             }
             else{
-                TrieNode* new_node = new TrieNode();
+                TrieNode* new_node = new TrieNode;
                 head->children[c] = new_node;
                 head = new_node;
                 head->rest_words++;
@@ -42,19 +40,20 @@ public:
     }
 
     void traverse(){
-        traverse(&root);
+        traverse_del(root);
     }
 
 private:
-    void traverse(TrieNode* t){
+    void traverse_del(TrieNode* t){
         if (t->end_of_word){
-            cout << '\n';
+            //cout << '\n';
             return;
         }
         for (auto& it : t->children){
-            cout << it.first << '\n';
-            traverse(it.second);
+            //cout << it.first << '\n';
+            traverse_del(it.second);
         }
+        delete t;
     }
 };
 
@@ -63,7 +62,7 @@ int main(){
     Trie t;
     t.add_word("golang"); t.add_word("gone");
     t.add_word("yolo"); t.add_word("you");
-    t.traverse();
+    //t.traverse();
 }
 
 
