@@ -21,7 +21,6 @@ public:
         root.rest_words = 0;
     }
     ~Trie(){
-        //free(&root);
     }
 
     void add_word(string word){
