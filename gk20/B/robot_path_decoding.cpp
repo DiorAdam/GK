@@ -8,43 +8,45 @@ using namespace std;
 
 
 
-void final_position(string& path, int l, int r, int& w, int& h){
-    if (l >= r) return;
-    int pos {l+1};
-    if (path[l] == 'E'){
-        w++;
-        w%=GRID_SIZE;
-    }
-    else if (path[l] == 'W'){
-        w = (w==0)? GRID_SIZE-1 : w-1;
-    }
-    else if (path[l] == 'N'){
-        h = (h==0)? GRID_SIZE-1: h-1;
-        //cout << w << "  " << h << '\n';
-    }
-    else if (path[l] == 'S'){
-        h++;
-        h%=GRID_SIZE;
-    }
-    else{
-        while (path[pos] != '('){
+void final_position(const string& path, int l, int r, int& w, int& h){
+    int pos {l};
+    while(pos < r){
+        if (path[pos] == 'E'){
+            w++;
+            //w%=GRID_SIZE;
             pos++;
         }
-        //cout << '\n' << path << "  "<< path.substr(l, pos-l) << '\n';
-        int sub_path_count = stoi(path.substr(l, pos-l));
-        int parentheses = 1;
-        pos++;
-        l = pos;
-        while (parentheses != 0){
-            if (path[pos] == '(') parentheses++;
-            else if (path[pos] == ')') parentheses--;
+        else if (path[pos] == 'W'){
+            //w = (w==0)? GRID_SIZE-1 : w-1;
+            w--;
             pos++;
         }
-        for (int i=0; i < sub_path_count; i++){
-            final_position(path, l, pos-1, w, h);
+        else if (path[pos] == 'N'){
+            //h = (h==0)? GRID_SIZE-1: h-1;
+            h--;
+            pos++;
+        }
+        else if (path[pos] == 'S'){
+            h++;
+            //h%=GRID_SIZE;
+            pos++;
+        }
+        else{
+            int sub_path_count = stoi(path.substr(pos, 1));
+            int parentheses = 1;
+            pos+=2;
+            int start = pos;
+            while (parentheses != 0){
+                if (path[pos] == '(') parentheses++;
+                else if (path[pos] == ')') parentheses--;
+                pos++;
+            }
+            int w_ {0}, h_ {0};
+            final_position(path, start, pos-1, w_, h_);
+            w += sub_path_count*w_;
+            h += sub_path_count*h_;
         }
     }
-    final_position(path, pos, r, w, h);
 }
 
 
@@ -58,7 +60,11 @@ int main(){
         cin >> input;
         int w {0}, h {0};
         final_position(input, 0, input.length(), w, h);
+        w%=GRID_SIZE; h%=GRID_SIZE;
+        if (w<0) w += GRID_SIZE;
+        if (h<0) h += GRID_SIZE;
         cout << "case #" << t << ": " << w+1 << " " << h+1 << '\n';
     }
 }
+
 
