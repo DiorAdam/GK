@@ -13,22 +13,18 @@ void final_position(const string& path, int l, int r, int& w, int& h){
     while(pos < r){
         if (path[pos] == 'E'){
             w++;
-            //w%=GRID_SIZE;
             pos++;
         }
         else if (path[pos] == 'W'){
-            //w = (w==0)? GRID_SIZE-1 : w-1;
             w--;
             pos++;
         }
         else if (path[pos] == 'N'){
-            //h = (h==0)? GRID_SIZE-1: h-1;
             h--;
             pos++;
         }
         else if (path[pos] == 'S'){
             h++;
-            //h%=GRID_SIZE;
             pos++;
         }
         else{
@@ -53,7 +49,6 @@ void final_position(const string& path, int l, int r, int& w, int& h){
 
 int main(){
     string input;
-
     cin >> input;
     int T = stoi(input);
     for (int t=1; t <= T; t++){
