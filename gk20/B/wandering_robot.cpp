@@ -6,7 +6,7 @@
 using namespace std;
 
 
-
+/*
 void binom_table(vector<vector<int>>& table, int N){
     vector<int> l0(1,1);
     vector<int> l1(2,1);
@@ -18,6 +18,25 @@ void binom_table(vector<vector<int>>& table, int N){
         }
         table.push_back(line);
     }
+}*/
+
+float pass_prob(int W, int U, int R){
+    float ans {0};
+    if (R < W && U > 1){
+        vector<float> mem(R, 1.0);
+        for (int j=1; j<R; j++){
+            mem[j] = mem[j-1]/2;
+        }
+        ans += mem.back()/2;
+        for (int i=2; i<U; i++){
+            mem[0] = mem[0]/2;
+            for (int j=1; j<R; j++){
+                mem[j] = 0.5*(mem[j-1]+mem[j]);
+            }
+            ans += mem.back()/2;
+        }
+    }
+    return ans;
 }
 
 
@@ -39,6 +58,7 @@ int main(){
         cin >> input;
         int D = stoi(input);
 
+        /*
         float ans {0.0};
         if (R==W && D==H) ans = 0.0;
         else if(W==1 && H==1) ans = 1.0;
@@ -58,7 +78,8 @@ int main(){
                 }
             }
         }
-        cout << "case #" << t << ": " << ans << '\n';
+        */
+        cout << "case #" << t << ": " << pass_prob(W, U, R) + pass_prob(H, L, D) << '\n';
     }
 }
 
