@@ -6,8 +6,9 @@ using namespace std;
 
 
 void skyline(int N, int A, int B, int C, vector<int>& v){
-    if (A-C+B > N || C > A || C > B) return;
+    if (A-C+B > N || C > A || C > B || (A==1 && B==1) ) return;
     if  (C == 0){
+        if(A==1 || B==1) return;
         for (int i=0; i<A-1; i++){
             v[i] = N-A+i+2;
         }
@@ -20,7 +21,7 @@ void skyline(int N, int A, int B, int C, vector<int>& v){
     }
     else if (C==1){
         for (int i=0; i<A-1; i++){
-            v[i] = i+1;
+            v[i] = i+2;
         }
         if (B==1){
             for (int i=A-1; i<N-1; i++){
