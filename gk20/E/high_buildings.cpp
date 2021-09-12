@@ -9,7 +9,7 @@ void skyline(int N, int A, int B, int C, vector<int>& v){
     if (A-C+B > N || C > A || C > B || C==0 || (A==1 && B==1 && N!=1) ) return;
 
     for (int i=0; i<A-C; i++){
-        v[i] = i+2;
+        v[i] = (A==N)? i+1: i+2;
     }
     for (int i=0; i<C-1; i++){
         v[A-C+i] = N;
@@ -21,13 +21,13 @@ void skyline(int N, int A, int B, int C, vector<int>& v){
         }
     }
     else{
+        v[N-B+C-1] = N;
         for (int i=0; i<N-(A+B-C); i++){
             v[A-1+i] = 1;
         }
-        v[N-B+C-1] = N;
     }
     for (int i=0; i<B-C; i++){
-        v[N-1-i] = i+2;
+        v[N-1-i] = (B==N)? i+1: i+2;
     }
 }
 
