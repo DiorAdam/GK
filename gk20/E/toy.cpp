@@ -11,7 +11,6 @@ void max_playing_time(vector<int>& E, vector<int>& R, int total_enj, vector<int>
     int enj = total_enj;
     for (int i=0; i<n; i++){
         if (R[i] > total_enj - E[i]){
-            cout << i << "\n";
             if (enj > ans[1]){
                 ans[1] = enj;
                 ans[2] = ans[0];
@@ -19,12 +18,15 @@ void max_playing_time(vector<int>& E, vector<int>& R, int total_enj, vector<int>
             total_enj-=E[i];
             E[i] = 0; R[i]=0;
             ans[0]++;
-            if (ans[0]> E.size()-1 ) return;
+            if (ans[0] >= E.size()-1 ) return;
             max_playing_time(E, R, total_enj, ans);
             return;
         }
         enj += E[i];
-        ans[1] = max(ans[1], enj);
+        if (enj > ans[1]){
+            ans[1] = enj;
+            ans[2] = ans[0];
+        }
     }
     ans[1] = -1;
     ans[2] = ans[0];
