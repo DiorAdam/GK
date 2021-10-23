@@ -18,7 +18,7 @@ int min_bots(int K, vector<int*> slots){
         }
         if(r < slots[i][1]){
             int num_added_bots = ceil((slots[i][1]-r)/(float)K);
-            ans +=num_added_bots;
+            ans += num_added_bots;
             r += num_added_bots*K;
         }
     }
@@ -40,7 +40,7 @@ int main(){
         for (int n=0; n<N; n++){
             int s; cin >> s;
             int e; cin >> e;
-            int* se = (int*) malloc(2*sizeof(int));
+            int* se = (int*) calloc(2, sizeof(int));
             se[0] = s; se[1] = e;
             intervals[n] = se;
         }
