@@ -56,11 +56,10 @@ vector<float> linear_solver(vector<vector<float>>& mat){
 
 
 int main(){
-    vector<vector<float>> mat;
-    vector<float> a(4, 0); a[0]=1; a[1] = 0; a[2] = 9; a[3] = 3;
-    vector<float> b(4, 0); b[0]=1; b[1] = 0; b[2] = 0; b[3] = 6;
-    vector<float> c(4, 0); c[0]=-2; c[1] = 3; c[2] = 0; c[3] = 0;
-    mat.push_back(a); mat.push_back(b); mat.push_back(c);
+    vector<vector<float>> mat= {{1, 0, 9, 3},
+                                {1, 0, 0, 6},
+                                {-2, 3, 0, 0}};
+
     vector<float> ans = linear_solver(mat);
 
     for (int i=0; i<ans.size(); i++){
