@@ -48,16 +48,19 @@ vector<int> neighbors(int S, int r, int p){
 
 
 void alma_play(TreeNode* head, int& S, int Ra, int Pa, int Rb, int Pb, unordered_set<int> closed_rooms){
+    //cout <<  "\n Berthe: " << head->score << '\n';
     vector<int> neighbs = neighbors(S, Ra, Pa);
     for (int i=0; i<neighbs.size(); i+=2){
-        TreeNode* child = new TreeNode();
-        child->score = head->score + 1;
-        unordered_set<int> new_closed_rooms(closed_rooms);
-        new_closed_rooms.insert(pow(2,neighbs[i])*pow(3,neighbs[i+1]));
-        head->children.push_back(child);
-        berthe_play(child, S, neighbs[i], neighbs[i+1], Rb, Pb, new_closed_rooms);
+        if ( closed_rooms.find(pow(2, neighbs[i])*pow(3, neighbs[i+1])) == closed_rooms.end() ){
+            TreeNode* child = new TreeNode();
+            child->score = head->score + 1;
+            unordered_set<int> new_closed_rooms(closed_rooms);
+            new_closed_rooms.insert(pow(2,neighbs[i])*pow(3,neighbs[i+1]));
+            head->children.push_back(child);
+            berthe_play(child, S, neighbs[i], neighbs[i+1], Rb, Pb, new_closed_rooms);
+        }
     }
-    if (neighbs.empty() && !head->finished){
+    if (head->children.empty() && !head->finished){
         TreeNode* child = new TreeNode();
         child->score = head->score, child->finished = true;
         head->children.push_back(child);
@@ -66,16 +69,19 @@ void alma_play(TreeNode* head, int& S, int Ra, int Pa, int Rb, int Pb, unordered
 }
 
 void berthe_play(TreeNode* head, int& S, int Ra, int Pa, int Rb, int Pb, unordered_set<int> closed_rooms){
+    //cout <<  "\n Alma: " << head->score << '\n';
     vector<int> neighbs = neighbors(S, Rb, Pb);
     for (int i=0; i<neighbs.size(); i+=2){
-        TreeNode* child = new TreeNode();
-        child->score = head->score - 1;
-        unordered_set<int> new_closed_rooms(closed_rooms);
-        new_closed_rooms.insert(pow(2,neighbs[i])*pow(3,neighbs[i+1]));
-        head->children.push_back(child);
-        alma_play(child, S, Ra, Pa, neighbs[i], neighbs[i+1], new_closed_rooms);
+        if ( closed_rooms.find(pow(2, neighbs[i])*pow(3, neighbs[i+1])) == closed_rooms.end() ){
+            TreeNode* child = new TreeNode();
+            child->score = head->score - 1;
+            unordered_set<int> new_closed_rooms(closed_rooms);
+            new_closed_rooms.insert(pow(2,neighbs[i])*pow(3,neighbs[i+1]));
+            head->children.push_back(child);
+            alma_play(child, S, Ra, Pa, neighbs[i], neighbs[i+1], new_closed_rooms);
+        }
     }
-    if (neighbs.empty() && !head->finished){
+    if (head->children.empty() && !head->finished){
         TreeNode* child = new TreeNode();
         child->score = head->score, child->finished = true;
         head->children.push_back(child);
@@ -122,7 +128,6 @@ int main(){
         closed_rooms.insert(pow(2, Rb)*pow(3, Pb));
 
         TreeNode* game_tree = new TreeNode();
-
         alma_play(game_tree, S, Ra, Pa, Rb, Pb, closed_rooms);
         cout << "case #" << t << ": " << maximizer(game_tree) << '\n';
     }
