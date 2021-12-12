@@ -23,7 +23,7 @@ int minimizer(TreeNode* head);
 
 
 
-vector<int> neighbors(int S, int r, int p){
+vector<int> neighbors(int& S, int r, int p){
     if (p%2==0){
         return {r, p-1, r, p+1, r-1, p-1};
     }
@@ -33,11 +33,11 @@ vector<int> neighbors(int S, int r, int p){
             ans.push_back(r+1);
             ans.push_back(p+1);
         }
-        if(p>1){
+        if(r>1 && p>1){
             ans.push_back(r);
             ans.push_back(p-1);
         }
-        if(p<2*r-1){
+        if(r>1 && p<2*r-1){
             ans.push_back(r);
             ans.push_back(p+1);
         }
@@ -52,6 +52,7 @@ void alma_play(TreeNode* head, int& S, int Ra, int Pa, int Rb, int Pb, unordered
     vector<int> neighbs = neighbors(S, Ra, Pa);
     for (int i=0; i<neighbs.size(); i+=2){
         if ( closed_rooms.find(pow(2, neighbs[i])*pow(3, neighbs[i+1])) == closed_rooms.end() ){
+            //cout << "\nAlma free neighbor: " << neighbs[i] << " " << neighbs[i+1] << '\n';
             TreeNode* child = new TreeNode();
             child->score = head->score + 1;
             unordered_set<int> new_closed_rooms(closed_rooms);
@@ -64,7 +65,7 @@ void alma_play(TreeNode* head, int& S, int Ra, int Pa, int Rb, int Pb, unordered
         TreeNode* child = new TreeNode();
         child->score = head->score, child->finished = true;
         head->children.push_back(child);
-        berthe_play(child, S, Ra, Rb, Rb, Pb, closed_rooms);
+        berthe_play(child, S, Ra, Pa, Rb, Pb, closed_rooms);
     }
 }
 
@@ -73,6 +74,7 @@ void berthe_play(TreeNode* head, int& S, int Ra, int Pa, int Rb, int Pb, unorder
     vector<int> neighbs = neighbors(S, Rb, Pb);
     for (int i=0; i<neighbs.size(); i+=2){
         if ( closed_rooms.find(pow(2, neighbs[i])*pow(3, neighbs[i+1])) == closed_rooms.end() ){
+            //cout << "\nBerthe free neighbor: " << neighbs[i] << " " << neighbs[i+1] << '\n';
             TreeNode* child = new TreeNode();
             child->score = head->score - 1;
             unordered_set<int> new_closed_rooms(closed_rooms);
@@ -85,7 +87,7 @@ void berthe_play(TreeNode* head, int& S, int Ra, int Pa, int Rb, int Pb, unorder
         TreeNode* child = new TreeNode();
         child->score = head->score, child->finished = true;
         head->children.push_back(child);
-        alma_play(child, S, Ra, Rb, Rb, Pb, closed_rooms);
+        alma_play(child, S, Ra, Pa, Rb, Pb, closed_rooms);
     }
 }
 
