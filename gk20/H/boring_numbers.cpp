@@ -25,11 +25,11 @@ vector<int> digits_of_long(long n){
 int count_bn_size_1(int l, int r, bool even){
     int ans{0};
     if (even){
-        for (int i=l+1; i<r; i++)
+        for (int i=l; i<=r; i++)
             if (i%2==0) ans++;
     }
     else{
-        for (int i=l+1; i<r; i++)
+        for (int i=l; i<=r; i++)
             if (i%2==1) ans++;
     }
     return ans;
@@ -42,17 +42,17 @@ long count_bn_same_size(const vector<int>& ld, const vector<int>& rd){
         if (ld[i] < rd[i]){ 
             int sz{n-i-1}; 
             long ans{0}; 
-            ans += count_bn_size_1(ld[i], rd[i], (i+1)%2==0)*count_bn_of_sizes(sz, sz);
+            ans += count_bn_size_1(ld[i]+1, rd[i]-1, (i+1)%2==0)*count_bn_of_sizes(sz, sz);
             if (ld[i]%2 == (i+1)%2){ 
                 long ansl{1};
                 for (int j=i+1; j<n; j++) 
-                    ansl*=count_bn_size_1(ld[j], 10, j+1%2==0);
+                    ansl*=count_bn_size_1(ld[j], 9, (j+1)%2==0);
                 ans += ansl;
             }
             if (rd[i]%2 == (i+1)%2){
                 long ansr{1}; 
                 for (int j=i+1; j<n; j++) 
-                    ansr*=count_bn_size_1(-1, rd[j]+1, (j+1)%2==0); 
+                    ansr*=count_bn_size_1(0, rd[j], (j+1)%2==0); 
                 ans += ansr; 
             }
             return ans; 
