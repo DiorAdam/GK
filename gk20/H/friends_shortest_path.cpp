@@ -55,4 +55,31 @@ int main(){
 }
 
 
+/*
+
+        map<int, unordered_set<int>> queries;
+        for (int i=0; i<Q; i++){
+            int a; cin >> a; a--;
+            int b; cin >> b; b--;
+            queries[a].insert(b);
+            queries[b].insert(a);
+        }
+        auto comp = [](const pair<int, unordered_set<int>>& a, 
+                       const pair<int, unordered_set<int>>& b) { 
+            return a.second.size() < b.second.size(); 
+        };
+        priority_queue<pair<int,unordered_set<int>>, 
+                       vector<pair<int,unordered_set<int>>,
+                       decltype(comp)> 
+        queue(queries.begin(), queries.end(), comp);
+        
+        int q{Q};
+        vector<int> ans(Q, 0);
+        while (q>0){
+            
+        }
+
+*/
+
+
 
