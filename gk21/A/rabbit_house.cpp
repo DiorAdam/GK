@@ -5,18 +5,18 @@
 using namespace std;
 
 
-int minimal_boxes(vector<vector<int>>& heights, int m, int M){
+long minimal_boxes(vector<vector<int>>& heights, int m, int M){
     int R = heights.size(), C = heights[0].size();
     unordered_map<int, vector<vector<int>>> index;
     for (int i=0; i < R; i++){
         for (int j=0; j<C; j++){ 
-            index[heights[i][j] - m].push_back({i, j});
+            index[heights[i][j]].push_back({i, j});
         }
     }
-    int added_boxes{0};
+    long added_boxes{0};
     vector<vector<int>> neighbs = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
     for (int h = M; h > m; h--){
-        for (const vector<int>& pos : index[h-m]){
+        for (const vector<int>& pos : index[h]){
             int i = pos[0], j = pos[1];
             if (h < heights[i][j]) continue;
             for (auto d : neighbs){
@@ -25,7 +25,7 @@ int minimal_boxes(vector<vector<int>>& heights, int m, int M){
                 if (heights[u][v] < heights[i][j] - 1){
                     added_boxes += heights[i][j]-1-heights[u][v];
                     heights[u][v] = heights[i][j]-1;
-                    index[h-1-m].push_back({u, v});
+                    index[h-1].push_back({u, v});
                 }
             }
         }
