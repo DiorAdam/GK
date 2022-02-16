@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 
+
 using namespace std;
 
 
@@ -15,10 +16,13 @@ void inline longest_ending(int N, int* arr, int* mem, vector<int>& ends){
     ends.push_back(N-1);
 }
 
-void inline longest_starting(int N, int* arr, int* mem){
+void inline longest_starting(int N, int* arr, int* mem, vector<int>& starts){
     for (int i=N-3; i>=0; i--){
         if (arr[i]-arr[i+1] == arr[i+1] - arr[i+2]) mem[i] = mem[i+1]+1;
-        else mem[i] = 2;
+        else{
+            mem[i] = 2;
+            starts.push_back(i+1);
+        }
     }
 }
 
@@ -32,9 +36,9 @@ int main(){
         }
         int ll[N] = {1, 2};
         int lr[N]; lr[N-1] = 1; lr[N-2] = 2;
-        vector<int> ends;
+        vector<int> ends, starts;
         longest_ending(N, arr, ll, ends); 
-        longest_starting(N, arr, lr);
+        longest_starting(N, arr, lr, starts);
         int ans {2};
         if (ll[N-1] == N){
             cout << "Case #" << t << ": " << N << '\n';
@@ -48,6 +52,13 @@ int main(){
                 new_sub_length++;
                 if (j < N-3 && period == arr[j+3] - arr[j+2]) new_sub_length += lr[j+2]-1;
             }
+            ans = max(ans, new_sub_length);
+        }
+        for (int i=0; i<starts.size(); i++){
+            int j = starts[i];
+            int new_sub_length = lr[j] + 1;
+            int period = arr[j+1]-arr[j];
+            if (j>1 && arr[j-2] == arr[j] -2*period) new_sub_length++;
             ans = max(ans, new_sub_length);
         }
         cout << "Case #" << t << ": " << ans << '\n';
