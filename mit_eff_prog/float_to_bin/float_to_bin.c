@@ -44,10 +44,12 @@ void print_float_bits(float_bits x){
     printf("%s\n", s);
 }
 
-int main(){
-    float arr[] = {3, 1.5, 0.15625, -7.333, 0, 250};
-    for (int i=0; i < sizeof(arr)/sizeof(arr[0]); i++){ 
-        float_bits x; x.f = arr[i]; 
+int print_float_bin_of_file(char* filepath){
+    FILE* f = fopen(filepath, "r");
+    if (f == NULL) return 1;
+    char line[64] = "";
+    while (fgets(line, 64,f)){
+        float_bits x; x.f = (float) atof(line); 
         float_decomposition fd;
         fd.sign = get_sign(x);
         fd.exp = get_exp(x); 
@@ -64,8 +66,13 @@ int main(){
             sprintf(r, "1.%s * 2^%d", fd.mantissa, fd.exp);
             strcat(ans, r);
         }
-        printf("bin(%f) = %s\n", arr[i], ans);
+        printf("bin(%f) = %s\n", x.f, ans);
     }
+    fclose(f);
+}
+
+int main(){
+    print_float_bin_of_file("./floats/floating.1.in");
     return 0;
 }
 
