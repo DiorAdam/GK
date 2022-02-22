@@ -29,7 +29,7 @@ public:
         }
     }
     inline size_t get_size() const { return vert.size(); }
-    inline const std::vector<State>& get_vert( size_t node ) const {
+    inline const std::vector<State>& neighbors( size_t node ) const {
         return vert[node];
     }
     void print(){
