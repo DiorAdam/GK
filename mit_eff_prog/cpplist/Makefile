@@ -1,7 +1,7 @@
 PROG := cpplist
-SHELL := /bin/sh
+SHELL := /bin/csh
 CC := gcc
-CXX := g++
+CXX := g++ 
 
 COMPILER_OPTIONS := -m64 -Wall -Wextra -Wshadow -Werror -pedantic -Iinclude
 CFLAGS := -std=c99 $(COMPILER_OPTIONS)
