@@ -49,6 +49,18 @@ vector<int> numletperm(const string& s){
 }
 
 
+int minCoins(vector<int> coins, int target){
+    vector<int> mem(target+1, INT32_MAX);
+    mem[0] = 0;
+    for (int i=1; i<=target; i++){
+        for (int c : coins){
+            if (i-c >= 0)
+                mem[i] = min(mem[i], mem[i-c]+1);
+        }
+    }
+    return mem[target];
+}
+
 
 int main(){
     string s = "fnienironxzeessvenenineoour";
@@ -61,6 +73,7 @@ int main(){
         }
         cout << '\n';
     }
+    cout << minCoins({1, 3, 6}, 11) << "\n";
     return 0;
 }
 
