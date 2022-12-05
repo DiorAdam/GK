@@ -1,0 +1,21 @@
+CC := gcc
+SHELL := /bin/bash
+
+SOURCES := $(shell echo src/*.c)
+HEADERS := $(shell echo include/*.h)
+
+FLAGS = -g -Iinclude
+
+OBJECTS := $(SOURCES:.c=.o)
+TARGET = prog.x
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(FLAGS) -o $(TARGET) $(OBJECTS)
+
+%.o : %.c $(HEADERS) $(COMMON)
+	$(CC) $(FLAGS) -c -o $@ $<
+
+clean:
+	rm -f $(TARGET) $(OBJECTS) 
+
+
