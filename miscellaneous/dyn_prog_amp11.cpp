@@ -1,6 +1,7 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
+#include <iostream>
 
 using namespace std;
 
@@ -41,8 +42,8 @@ int dynmincost(vector<int>& demand, vector<int>& cost){
 }
 
 int main() {
-    vector<int> demand = {1, 2, 4, 6, 7, 8, 9, 11, 12, 13, 15, 15, 17};
-    vector<int> cost = {5400, 5600, 5800, 5700, 5500, 5200, 36, 2778, 26, 26, 2891, 6373, 2382};
+    vector<int> demand = {1, 2, 4, 6, 7, 8};
+    vector<int> cost = {5400, 5600, 5800, 5700, 5500, 5200};
     auto start = chrono::steady_clock::now();
     int res = mincost(0, 0, demand, cost);
     auto end = chrono::steady_clock::now();

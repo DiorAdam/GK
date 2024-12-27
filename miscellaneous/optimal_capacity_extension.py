@@ -27,9 +27,9 @@ def backward_oce(demand_py, cost_py, max_py, fixed_cost):
     states = {total_demand: 0}
     n = len(demand_py)
     demand_py = [0]+demand_py
-    for y in range(n-1, 0, -1):
+    for y in range(n-1, -1, -1):
         new_states = dict()
-        for st in range(demand_py[y-1], total_demand+1):
+        for st in range(demand_py[y], total_demand+1):
             cy = float("inf")
             for built in range(0, max_py+1):
                 if st + built in states:
